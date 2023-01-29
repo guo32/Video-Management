@@ -4,23 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="04f5745f-066e-44ff-a5ba-9d105fe1fe14" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/CustomerController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/StaffController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/database/ConnectionMaker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/database/MySqlConnectionMaker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/home/VideoManagement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/CustomerDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/StaffDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/util/ScannerUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/viewer/StaffViewer.java" afterDir="false" />
+    <list default="true" id="04f5745f-066e-44ff-a5ba-9d105fe1fe14" name="Changes" comment="first commit">
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/StoreController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/AddressDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/viewer/CustomerViewer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/viewer/StoreViewer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/StaffController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/StaffController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/StoreDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/StoreDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/viewer/StaffViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/viewer/StaffViewer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +61,7 @@
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "settings.sync",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -84,19 +78,42 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1674803725524</updated>
-      <workItem from="1674803726926" duration="14701000" />
+      <workItem from="1674803726926" duration="28933000" />
     </task>
+    <task id="LOCAL-00001" summary="first commit">
+      <created>1674868929026</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1674868929026</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/controller/StaffController.java</url>
-          <line>47</line>
+          <line>48</line>
           <properties class="controller.StaffController" method="auth">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />

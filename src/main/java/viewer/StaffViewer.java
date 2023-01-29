@@ -1,6 +1,7 @@
 package viewer;
 
 import controller.StaffController;
+import controller.StoreController;
 import database.ConnectionMaker;
 import model.StaffDTO;
 import util.ScannerUtil;
@@ -12,7 +13,6 @@ import java.util.Scanner;
 public class StaffViewer {
     private final Scanner SCANNER;
     private final Connection CONNECTION;
-    private final int LIST_SIZE = 8;
     private StaffDTO login = null;
 
     public StaffViewer(ConnectionMaker connectionMaker) {
@@ -59,12 +59,15 @@ public class StaffViewer {
     }
 
     private void showAdminMenu() {
-        String message = "[1] 재고 [2] 고객 [3] 영화 [4] 직원 [5] 상점 [6] 로그아웃";
+        String message = "[1] 재고 [2] 회원 [3] 영화 [4] 직원 [5] 상점 [6] 로그아웃";
         int userChoice = ScannerUtil.nextInt(SCANNER, message, 1, 6);
         if (userChoice == 1) {
             // 재고 관련
         } else if (userChoice == 2) {
             // 고객 관련
+            CustomerViewer customerViewer = new CustomerViewer(CONNECTION, SCANNER);
+            customerViewer.showMenu();
+            showAdminMenu();
         } else if (userChoice == 3) {
             // 영화 관련
         } else if (userChoice == 4) {
@@ -106,10 +109,25 @@ public class StaffViewer {
         message = "직원의 이메일을 입력해주세요.";
         newStaff.setEmail(ScannerUtil.nextLine(SCANNER, message));
 
-        // 주소랑 가게 처리하기
+        StoreViewer storeViewer = new StoreViewer(CONNECTION, SCANNER);
+        StoreController storeController = new StoreController(CONNECTION);
+        storeViewer.printStoreList();
+        message = "근무할 대여점의 번호를 입력해주세요.";
+        int storeId = ScannerUtil.nextInt(SCANNER, message);
+        while (storeController.selectById(storeId) == null) {
+            System.out.println("존재하지 않는 대여점의 번호입니다.");
+            storeViewer.printStoreList();
+            storeId = ScannerUtil.nextInt(SCANNER, message);
+        }
+        newStaff.setStoreId(storeId);
+
+        // 주소 --> addressView 생성 후 추가
+        newStaff.setAddressId(1);
 
         StaffController staffController = new StaffController(CONNECTION);
         staffController.insert(newStaff);
+        System.out.println("정상적으로 등록되었습니다.");
+        printStaffList();
     }
 
     private void printStaffList() {
@@ -117,7 +135,7 @@ public class StaffViewer {
         ArrayList<StaffDTO> list = staffController.selectAll();
         System.out.println("+--------------------------------------+");
         for (StaffDTO s : list) {
-            System.out.printf("[%d] %s\n", s.getStaffId(), s.getUsername());
+            System.out.printf(" [%d] %s\n", s.getStaffId(), s.getUsername());
             System.out.println("+--------------------------------------+");
         }
         String message = "상세보기할 직원의 번호를 입력해주세요.\n[번호] 입력 [0] 뒤로가기";
@@ -135,6 +153,7 @@ public class StaffViewer {
 
     private void printStaffInfo(int staffId) {
         StaffController staffController = new StaffController(CONNECTION);
+        StoreController storeController = new StoreController(CONNECTION);
         StaffDTO staffDTO = staffController.selectById(staffId);
         System.out.println("+======================================+");
         System.out.println("               직원 정보");
@@ -149,7 +168,7 @@ public class StaffViewer {
         System.out.println("+--------------------------------------+");
         System.out.println(" [아이디] " + staffDTO.getUsername());
         System.out.println("+--------------------------------------+");
-        System.out.println(" [소속 상점] " + staffDTO.getStoreId()); // 임시 -- store 연결 후 수정할 것
+        System.out.println(" [소속 상점] " + staffDTO.getStoreId() + "(" + storeController.selectById(staffDTO.getStoreId()).getAddress() + ")");
         System.out.println("+--------------------------------------+");
         if (staffDTO.getActive() == 1) {
             System.out.println(" [활성화] Y");
@@ -170,7 +189,53 @@ public class StaffViewer {
     }
 
     private void updateStaff(int staffId) {
+        StaffController staffController = new StaffController(CONNECTION);
+        StaffDTO staffDTO = staffController.selectById(staffId);
 
+        // 근무지(대여점) 변경
+        String message = "직원[" + staffDTO.getUsername() + "]의 근무지를 변경하시겠습니까?\n[Y] 예 [N] 아니오";
+        String yesNo = ScannerUtil.nextLine(SCANNER, message);
+        if (yesNo.equalsIgnoreCase("Y")) {
+            StoreViewer storeViewer = new StoreViewer(CONNECTION, SCANNER);
+            StoreController storeController = new StoreController(CONNECTION);
+            storeViewer.printStoreList();
+            message = "근무할 대여점의 번호를 입력해주세요.";
+            int storeId = ScannerUtil.nextInt(SCANNER, message);
+            while (storeController.selectById(storeId) == null) {
+                System.out.println("존재하지 않는 대여점의 번호입니다.");
+                storeId = ScannerUtil.nextInt(SCANNER, message);
+            }
+            staffDTO.setStoreId(storeId);
+        }
+
+        // 활성화 상태 변경
+        if (staffDTO.getActive() == 1) {
+            message = "해당 계정을 휴면 상태로 전환하시겠습니까?\n[Y] 예 [N] 아니오";
+            yesNo = ScannerUtil.nextLine(SCANNER, message);
+            if (yesNo.equalsIgnoreCase("Y")) {
+                staffDTO.setActive(0);
+            }
+        } else {
+            message = "해당 계정을 활성화시키겠습니까?\n[Y] 예 [N] 아니오";
+            yesNo = ScannerUtil.nextLine(SCANNER, message);
+            if (yesNo.equalsIgnoreCase("Y")) {
+                staffDTO.setActive(1);
+            }
+        }
+
+        // 비밀번호 변경
+        message = "새로운 비밀번호를 입력해주세요.";
+        staffDTO.setPassword(ScannerUtil.nextLine(SCANNER, message));
+
+        message = "관리자 비밀번호를 입력해주세요.";
+        String adminPassword = ScannerUtil.nextLine(SCANNER, message);
+        if (adminPassword.equals(staffController.selectById(login.getStaffId()).getPassword())) {
+            staffController.update(staffDTO);
+            System.out.println("변경사항이 정상적으로 저장되었습니다.");
+        } else {
+            System.out.println("직원 정보 변경에 실패하였습니다.");
+        }
+        printStaffInfo(staffId);
     }
 
     private void deleteStaff(int staffId) {
@@ -182,6 +247,7 @@ public class StaffViewer {
         if (yesNo.equalsIgnoreCase("Y")) {
             staffController.delete(staffId);
             System.out.println("정상적으로 삭제되었습니다.");
+            printStaffList();
         } else {
             System.out.println("취소되었습니다.");
             printStaffInfo(staffId);
@@ -189,13 +255,16 @@ public class StaffViewer {
     }
 
     private void showStaffMenu(int storeId) {
-        String message = "[1] 재고 [2] 고객 [3] 로그아웃";
+        String message = "[1] 재고 [2] 회원 [3] 로그아웃";
         int userChoice = ScannerUtil.nextInt(SCANNER, message, 1, 3);
 
         if (userChoice == 1) {
             // 재고(inventory) viewer 생성 후 수정
         } else if (userChoice == 2) {
             // 고객(customer) viewer 생성 후 수정
+            CustomerViewer customerViewer = new CustomerViewer(CONNECTION, SCANNER);
+            customerViewer.showMenu();
+            showStaffMenu(storeId);
         } else if (userChoice == 3) {
             System.out.println("정상적으로 로그아웃되었습니다.");
             login = null;

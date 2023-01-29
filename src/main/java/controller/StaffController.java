@@ -34,6 +34,7 @@ public class StaffController {
                 staffDTO.setStoreId(resultSet.getInt("store_id"));
                 staffDTO.setActive(resultSet.getInt("active"));
                 staffDTO.setUsername(resultSet.getString("username"));
+                staffDTO.setPassword(resultSet.getString("password"));
                 staffDTO.setLastUpdate(resultSet.getTimestamp("last_update"));
             }
             resultSet.close();
@@ -124,15 +125,14 @@ public class StaffController {
     }
 
     public void update(StaffDTO staffDTO) {
-        String query = "update `staff` set `address_id` = ?, `store_id` = ?, `active` = ?, `password` = ? where `staff_id` = ?";
+        String query = "update `staff` set `store_id` = ?, `active` = ?, `password` = ? where `staff_id` = ?";
         try {
             PreparedStatement preparedStatement = CONNECTION.prepareStatement(query);
 
-            preparedStatement.setInt(1, staffDTO.getAddressId());
-            preparedStatement.setInt(2, staffDTO.getStoreId());
-            preparedStatement.setInt(3, staffDTO.getActive());
-            preparedStatement.setString(4, staffDTO.getPassword());
-            preparedStatement.setInt(5, staffDTO.getStaffId());
+            preparedStatement.setInt(1, staffDTO.getStoreId());
+            preparedStatement.setInt(2, staffDTO.getActive());
+            preparedStatement.setString(3, staffDTO.getPassword());
+            preparedStatement.setInt(4, staffDTO.getStaffId());
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
