@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="04f5745f-066e-44ff-a5ba-9d105fe1fe14" name="Changes" comment="first commit">
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/StoreController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/AddressDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/viewer/CustomerViewer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/viewer/StoreViewer.java" afterDir="false" />
+    <list default="true" id="04f5745f-066e-44ff-a5ba-9d105fe1fe14" name="Changes" comment="second commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/StaffController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/StaffController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/StoreDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/StoreDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/viewer/CustomerViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/viewer/CustomerViewer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/viewer/StaffViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/viewer/StaffViewer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,7 +56,7 @@
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "settings.sync",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -78,7 +73,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1674803725524</updated>
-      <workItem from="1674803726926" duration="28933000" />
+      <workItem from="1674803726926" duration="38337000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1674868929026</created>
@@ -87,7 +82,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674868929026</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="second commit">
+      <created>1674969557029</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1674969557029</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,7 +108,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
+    <MESSAGE value="second commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="second commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

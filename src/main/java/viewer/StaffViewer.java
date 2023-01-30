@@ -65,7 +65,7 @@ public class StaffViewer {
             // 재고 관련
         } else if (userChoice == 2) {
             // 고객 관련
-            CustomerViewer customerViewer = new CustomerViewer(CONNECTION, SCANNER);
+            CustomerViewer customerViewer = new CustomerViewer(CONNECTION, SCANNER, login);
             customerViewer.showMenu();
             showAdminMenu();
         } else if (userChoice == 3) {
@@ -262,7 +262,7 @@ public class StaffViewer {
             // 재고(inventory) viewer 생성 후 수정
         } else if (userChoice == 2) {
             // 고객(customer) viewer 생성 후 수정
-            CustomerViewer customerViewer = new CustomerViewer(CONNECTION, SCANNER);
+            CustomerViewer customerViewer = new CustomerViewer(CONNECTION, SCANNER, login);
             customerViewer.showMenu();
             showStaffMenu(storeId);
         } else if (userChoice == 3) {
