@@ -46,6 +46,23 @@ public class StaffController {
         return staffDTO;
     }
 
+    public boolean validateUsername(String username) {
+        String query = "select `username` from `staff` where `username` = ?";
+        try {
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(query);
+            preparedStatement.setString(1, username);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("[staff] validateUsername error");
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public StaffDTO auth(String username, String password) {
         StaffDTO staffDTO = null;
         String query = "select * from `staff` where `username` = ? and `password` = ?";
@@ -61,6 +78,7 @@ public class StaffController {
                 staffDTO.setFirstName(resultSet.getString("first_name"));
                 staffDTO.setLastName(resultSet.getString("last_name"));
                 staffDTO.setStoreId(resultSet.getInt("store_id"));
+                staffDTO.setActive(resultSet.getInt("active"));
                 staffDTO.setUsername(resultSet.getString("username"));
             }
             resultSet.close();

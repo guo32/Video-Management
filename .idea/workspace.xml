@@ -4,9 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="04f5745f-066e-44ff-a5ba-9d105fe1fe14" name="Changes" comment="second commit">
+    <list default="true" id="04f5745f-066e-44ff-a5ba-9d105fe1fe14" name="Changes" comment="Create Customer-Related Features">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/AddressController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/CityCountryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/FilmController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/InventoryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/InventoryFilmController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/CityCountryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/FilmDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/InventoryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/InventoryFilmDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/viewer/AddressViewer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/viewer/CityCountryViewer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/viewer/FilmViewer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/viewer/InventoryFilmViewer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/viewer/InventoryViewer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/StaffController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/StaffController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/viewer/CustomerViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/viewer/CustomerViewer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/viewer/StaffViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/viewer/StaffViewer.java" afterDir="false" />
     </list>
@@ -25,6 +41,19 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="4a4955d2-61e7-4805-954b-75d69de46732" />
+        <option name="url" value="https://github.com/guo32/Video-Management.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -73,7 +102,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1674803725524</updated>
-      <workItem from="1674803726926" duration="38337000" />
+      <workItem from="1674803726926" duration="85808000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1674868929026</created>
@@ -89,7 +118,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674969557029</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Create Customer-Related Features">
+      <created>1675040845194</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1675040845194</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -109,21 +145,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
     <MESSAGE value="second commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="second commit" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/controller/StaffController.java</url>
-          <line>48</line>
-          <properties class="controller.StaffController" method="auth">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Create Customer-Related Features" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create Customer-Related Features" />
   </component>
 </project>

@@ -2,10 +2,7 @@ package controller;
 
 import model.CustomerDTO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class CustomerController {
@@ -137,7 +134,12 @@ public class CustomerController {
         try {
             PreparedStatement preparedStatement = CONNECTION.prepareStatement(query);
             preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
+            try {
+                preparedStatement.executeUpdate();
+            } catch (SQLIntegrityConstraintViolationException e) {
+                System.out.println("[customer] foreign key error");
+                System.out.println("해당 회원은 삭제할 수 없습니다.");
+            }
             preparedStatement.close();
         } catch (SQLException e) {
             System.out.println("[customer] delete error");

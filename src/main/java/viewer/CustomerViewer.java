@@ -42,15 +42,23 @@ public class CustomerViewer {
         message = "회원의 이메일을 입력해주세요.";
         newCustomer.setEmail(ScannerUtil.nextLine(SCANNER, message));
 
-        message = "회원의 주소를 입력해주세요.";
         // address 완성 후 수정
+        AddressViewer addressViewer = new AddressViewer(CONNECTION, SCANNER);
+        int addressId = addressViewer.insertAddress();
+        if (addressId != -1) {
+            newCustomer.setAddressId(addressId);
+        } else {
+            System.out.println("주소 등록에 실패하였습니다.");
+            addressId = addressViewer.insertAddress();
+        }
 
-        newCustomer.setStoreId(login.getStoreId()); // 등록하는 직원의 대여점을 기준으로 삽임하였음
+
+        newCustomer.setStoreId(login.getStoreId()); // 등록하는 직원의 대여점을 기준으로 삽입하였음
 
         CustomerController customerController = new CustomerController(CONNECTION);
         customerController.insert(newCustomer);
 
-        System.out.println("정상적으로 등록되었습니다.\n메뉴로 이동합니다.");
+        System.out.println("회원이 정상적으로 등록되었습니다.\n메뉴로 이동합니다.");
         showMenu();
     }
 
@@ -64,11 +72,11 @@ public class CustomerViewer {
                 int userChoice = ScannerUtil.nextInt(SCANNER, message, 1, 5);
                 if (userChoice == 1) {
                     selectCustomer();
-                    i -= LIST_SIZE;
+                    i -= (LIST_SIZE + 1);
                     continue;
                 } else if (userChoice == 2) {
                     searchCustomer();
-                    i -= LIST_SIZE;
+                    i -= (LIST_SIZE + 1);
                     continue;
                 } else if (userChoice == 3) {
                     if (i - LIST_SIZE != 0) {
@@ -98,6 +106,27 @@ public class CustomerViewer {
         }
     }
 
+    private void selectCustomer(ArrayList<CustomerDTO> list) {
+        String message = "상세보기할 회원의 번호를 입력해주세요.\n[번호] 입력 [0] 뒤로가기";
+        int userChoice = ScannerUtil.nextInt(SCANNER, message);
+        while (userChoice != 0 && !validateCustomerIdInList(list, userChoice)) {
+            System.out.println("현재 검색 리스트에 존재하지 않는 회원의 번호입니다.");
+            userChoice = ScannerUtil.nextInt(SCANNER, message);
+        }
+        if (userChoice != 0) {
+            printCustomerInfo(userChoice);
+        }
+    }
+
+    private boolean validateCustomerIdInList(ArrayList<CustomerDTO> list, int customerId) {
+        for (CustomerDTO c : list) {
+            if (c.getCustomerId() == customerId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void printCustomerInfo(int customerId) {
         CustomerController customerController = new CustomerController(CONNECTION);
         CustomerDTO customerDTO = customerController.selectById(customerId);
@@ -108,7 +137,9 @@ public class CustomerViewer {
         System.out.println("+--------------------------------------+");
         System.out.println(" [이름] " + customerDTO.getFirstName() + " " + customerDTO.getLastName());
         System.out.println("+--------------------------------------+");
-        System.out.println(" [주소] " + customerDTO.getAddressId()); // 임시 -- address 연결 후 수정할 것
+        AddressViewer addressViewer = new AddressViewer(CONNECTION, SCANNER);
+        System.out.print(" [주소] ");
+        addressViewer.printSimpleAddress(customerDTO.getAddressId());
         System.out.println("+--------------------------------------+");
         System.out.println(" [이메일] " + customerDTO.getEmail());
         System.out.println("+--------------------------------------+");
@@ -129,7 +160,23 @@ public class CustomerViewer {
     }
 
     private void updateCustomer(int customerId) {
-
+        CustomerController customerController = new CustomerController(CONNECTION);
+        CustomerDTO customerDTO = customerController.selectById(customerId);
+        if (customerDTO.getActive() == 1) {
+            String message = "해당 회원을 휴면 상태로 전환하시겠습니까?\n[Y] 예 [N] 아니오";
+            String yesNo = ScannerUtil.nextLine(SCANNER, message);
+            if (yesNo.equalsIgnoreCase("Y")) {
+                customerDTO.setActive(0);
+            }
+        } else {
+            String message = "해당 회원을 활성화시키겠습니까?\n[Y] 예 [N] 아니오";
+            String yesNo = ScannerUtil.nextLine(SCANNER, message);
+            if (yesNo.equalsIgnoreCase("Y")) {
+                customerDTO.setActive(1);
+            }
+        }
+        customerController.update(customerDTO);
+        printCustomerInfo(customerId);
     }
 
     private void deleteCustomer(int customerId) {
@@ -140,8 +187,6 @@ public class CustomerViewer {
 
         if (yesNo.equalsIgnoreCase("Y")) {
             customerController.delete(customerId);
-            System.out.println("정상적으로 삭제되었습니다.");
-            // 오류 있는지 확인해야 함 --> 현재 삭제 불가
         } else {
             System.out.println("취소되었습니다.");
             printCustomerInfo(customerId);
@@ -168,7 +213,7 @@ public class CustomerViewer {
         message = "[1] 회원 선택 [2] 목록으로 돌아가기";
         int userChoice = ScannerUtil.nextInt(SCANNER, message, 1, 2);
         if (userChoice == 1) {
-            selectCustomer();
+            selectCustomer(list);
         }
     }
 }

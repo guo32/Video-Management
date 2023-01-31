@@ -43,11 +43,17 @@ public class StaffViewer {
         StaffController staffController = new StaffController(CONNECTION);
         login = staffController.auth(username, password);
 
-        if (login.getUsername().equals("Admin")) {
-            showAdminMenu();
-        }
-        else if (login != null) {
-            showStaffMenu(login.getStoreId());
+        if (login != null) {
+            if (login.getActive() == 0) {
+                System.out.println("휴면 상태의 계정은 로그인할 수 없습니다. 관리자에게 문의하세요.");
+                login = null;
+                return;
+            }
+            if (login.getUsername().equals("Admin")) {
+                showAdminMenu();
+            } else {
+                showStaffMenu(login.getStoreId());
+            }
         } else {
             System.out.println("아이디 또는 비밀번호가 잘못되었습니다.");
             message = "[1] 다시 입력 [2] 뒤로 가기";
@@ -62,7 +68,12 @@ public class StaffViewer {
         String message = "[1] 재고 [2] 회원 [3] 영화 [4] 직원 [5] 상점 [6] 로그아웃";
         int userChoice = ScannerUtil.nextInt(SCANNER, message, 1, 6);
         if (userChoice == 1) {
-            // 재고 관련
+            // 재고 관련 --> 관리자는 모든 재고 목록을 볼 수 있도록 수정할 것
+            /*InventoryFilmViewer inventoryFilmViewer = new InventoryFilmViewer(CONNECTION, SCANNER);
+            inventoryFilmViewer.printListByStoreId(login.getStoreId());*/
+            InventoryViewer inventoryViewer = new InventoryViewer(CONNECTION, SCANNER);
+            inventoryViewer.showMenu(login.getStoreId());
+            showAdminMenu();
         } else if (userChoice == 2) {
             // 고객 관련
             CustomerViewer customerViewer = new CustomerViewer(CONNECTION, SCANNER, login);
@@ -93,9 +104,16 @@ public class StaffViewer {
     }
 
     private void insertStaff() {
+        StaffController staffController = new StaffController(CONNECTION);
         StaffDTO newStaff = new StaffDTO();
+
         String message = "직원의 아이디를 입력해주세요.";
-        newStaff.setUsername(ScannerUtil.nextLine(SCANNER, message));
+        String username = ScannerUtil.nextLine(SCANNER, message);
+        while (staffController.validateUsername(username)) {
+            System.out.println("이미 사용 중인 아이디입니다.");
+            username = ScannerUtil.nextLine(SCANNER, message);
+        }
+        newStaff.setUsername(username);
 
         message = "직원의 비밀번호를 입력해주세요.";
         newStaff.setPassword(ScannerUtil.nextLine(SCANNER, message));
@@ -121,10 +139,15 @@ public class StaffViewer {
         }
         newStaff.setStoreId(storeId);
 
-        // 주소 --> addressView 생성 후 추가
-        newStaff.setAddressId(1);
+        AddressViewer addressViewer = new AddressViewer(CONNECTION, SCANNER);
+        int addressId = addressViewer.insertAddress();
+        if (addressId != -1) {
+            newStaff.setAddressId(addressId);
+        } else {
+            System.out.println("주소 등록에 실패하였습니다.");
+            addressId = addressViewer.insertAddress();
+        }
 
-        StaffController staffController = new StaffController(CONNECTION);
         staffController.insert(newStaff);
         System.out.println("정상적으로 등록되었습니다.");
         printStaffList();
@@ -162,7 +185,9 @@ public class StaffViewer {
         System.out.println("+--------------------------------------+");
         System.out.println(" [이름] " + staffDTO.getFirstName() + " " + staffDTO.getLastName());
         System.out.println("+--------------------------------------+");
-        System.out.println(" [주소] " + staffDTO.getAddressId()); // 임시 -- address 연결 후 수정할 것
+        AddressViewer addressViewer = new AddressViewer(CONNECTION, SCANNER);
+        System.out.print(" [주소] ");
+        addressViewer.printSimpleAddress(staffDTO.getAddressId());
         System.out.println("+--------------------------------------+");
         System.out.println(" [이메일] " + staffDTO.getEmail());
         System.out.println("+--------------------------------------+");
@@ -260,6 +285,11 @@ public class StaffViewer {
 
         if (userChoice == 1) {
             // 재고(inventory) viewer 생성 후 수정
+            /*InventoryFilmViewer inventoryFilmViewer = new InventoryFilmViewer(CONNECTION, SCANNER);
+            inventoryFilmViewer.printListByStoreId(storeId);*/
+            InventoryViewer inventoryViewer = new InventoryViewer(CONNECTION, SCANNER);
+            inventoryViewer.showMenu(storeId);
+            showStaffMenu(storeId);
         } else if (userChoice == 2) {
             // 고객(customer) viewer 생성 후 수정
             CustomerViewer customerViewer = new CustomerViewer(CONNECTION, SCANNER, login);
