@@ -15,9 +15,31 @@ public class StaffViewer {
     private final Connection CONNECTION;
     private StaffDTO login = null;
 
-    public StaffViewer(ConnectionMaker connectionMaker) {
+    public StaffViewer(Connection connection) {
         SCANNER = new Scanner(System.in);
-        CONNECTION = connectionMaker.makeConnection();
+        CONNECTION = connection;
+
+        // 관리자 계정 생성 (ID: Admin/PW: 1111)
+        createAdmin();
+    }
+
+    private void createAdmin() {
+        StaffController staffController = new StaffController(CONNECTION);
+        if (staffController.validateUsername("Admin")) {
+            return;
+        } else {
+            StaffDTO staffDTO = new StaffDTO();
+            staffDTO.setUsername("Admin");
+            staffDTO.setPassword("1111");
+            staffDTO.setFirstName("Admin");
+            staffDTO.setLastName("Name");
+            staffDTO.setAddressId(1);
+            staffDTO.setEmail("Admin@gmail.com");
+            staffDTO.setStoreId(1);
+            staffDTO.setActive(1);
+
+            staffController.insert(staffDTO);
+        }
     }
 
     public void showIndex() {
@@ -49,7 +71,7 @@ public class StaffViewer {
                 login = null;
                 return;
             }
-            if (login.getUsername().equals("Admin")) {
+            if (login.getUsername().equalsIgnoreCase("Admin")) {
                 showAdminMenu();
             } else {
                 showStaffMenu(login.getStoreId());
@@ -84,10 +106,16 @@ public class StaffViewer {
             showAdminMenu();
         } else if (userChoice == 4) {
             // 영화 관련
+            FilmViewer filmViewer = new FilmViewer(CONNECTION, SCANNER);
+            filmViewer.showMenu();
+            showAdminMenu();
         } else if (userChoice == 5) {
             showStaffManagementMenu();
         } else if (userChoice == 6) {
-            // 상점 관련
+            // 대여점 관련
+            StoreViewer storeViewer = new StoreViewer(CONNECTION, SCANNER);
+            storeViewer.showMenu();
+            showAdminMenu();
         } else if (userChoice == 7) {
             System.out.println("정상적으로 로그아웃되었습니다.");
             login = null;

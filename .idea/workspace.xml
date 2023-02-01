@@ -4,15 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="04f5745f-066e-44ff-a5ba-9d105fe1fe14" name="Changes" comment="Create Inventory-Related Features">
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/RentalController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/RentalDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/viewer/RentalViewer.java" afterDir="false" />
+    <list default="true" id="04f5745f-066e-44ff-a5ba-9d105fe1fe14" name="Changes" comment="Create Rental-Related Features">
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/ActorController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/LanguageController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/ActorDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/viewer/ActorViewer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/InventoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/InventoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/viewer/CustomerViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/viewer/CustomerViewer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/FilmController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/FilmController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/StoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/home/VideoManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/home/VideoManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/FilmDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/FilmDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/util/ScannerUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/ScannerUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/viewer/FilmViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/viewer/FilmViewer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/viewer/InventoryFilmViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/viewer/InventoryFilmViewer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/viewer/StaffViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/viewer/StaffViewer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/viewer/StoreViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/viewer/StoreViewer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +117,7 @@
       <option name="presentableId" value="Default" />
       <updated>1674803725524</updated>
       <workItem from="1674803726926" duration="105845000" />
-      <workItem from="1675212988118" duration="8763000" />
+      <workItem from="1675212988118" duration="33383000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1674868929026</created>
@@ -141,7 +147,14 @@
       <option name="project" value="LOCAL" />
       <updated>1675145800512</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Create Rental-Related Features">
+      <created>1675225315955</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1675225315955</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,6 +176,7 @@
     <MESSAGE value="second commit" />
     <MESSAGE value="Create Customer-Related Features" />
     <MESSAGE value="Create Inventory-Related Features" />
-    <option name="LAST_COMMIT_MESSAGE" value="Create Inventory-Related Features" />
+    <MESSAGE value="Create Rental-Related Features" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create Rental-Related Features" />
   </component>
 </project>

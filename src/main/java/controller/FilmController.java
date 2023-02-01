@@ -14,13 +14,14 @@ public class FilmController {
         CONNECTION = connection;
     }
 
-    public void insert(FilmDTO filmDTO) {
+    public int insert(FilmDTO filmDTO) {
+        int id = 0;
         String query = "insert into `film`(`title`, `description`, `release_year`, `language_id`, `rental_duration`, `rental_rate`, `length`, `replacement_cost`, `rating`, `special_features`) values(?, ?, ?, ?, ?, ?, ?, ?, ?, '" + filmDTO.getSpecialFeatures() + "')";
         try {
             PreparedStatement preparedStatement = CONNECTION.prepareStatement(query);
             preparedStatement.setString(1, filmDTO.getTitle());
             preparedStatement.setString(2, filmDTO.getDescription());
-            preparedStatement.setTime(3, Time.valueOf(filmDTO.getReleaseYear().toString()));
+            preparedStatement.setInt(3, Integer.parseInt(filmDTO.getReleaseYear().toString()));
             preparedStatement.setInt(4, filmDTO.getLanguageId());
             preparedStatement.setInt(5, filmDTO.getRentalDuration());
             preparedStatement.setDouble(6, filmDTO.getRentalRate());
@@ -28,11 +29,20 @@ public class FilmController {
             preparedStatement.setDouble(8, filmDTO.getReplacementCost());
             preparedStatement.setString(9, filmDTO.getRating());
             preparedStatement.executeUpdate();
+
+            query = "select `film_id` from `film` order by `last_update` desc limit 1";
+            preparedStatement = CONNECTION.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()) {
+                id = resultSet.getInt("film_id");
+            }
+            resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
             System.out.println("[film] insert error");
             e.printStackTrace();
         }
+        return id;
     }
 
     public FilmDTO selectById(int id) {
@@ -113,5 +123,41 @@ public class FilmController {
         }
 
         return list;
+    }
+
+    public ArrayList<String> selectActorListById(int id) {
+        ArrayList<String> list = new ArrayList<>();
+        String query = "select `actor`.`first_name`, `actor`.`last_name` from `film_actor` " +
+                "inner join `actor` on `film_actor`.`actor_id` = `actor`.`actor_id` " +
+                "inner join `film` on `film_actor`.`film_id` = `film`.`film_id` " +
+                "where `film`.`film_id` = ?";
+        try {
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String actorName = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
+                list.add(actorName);
+            }
+        } catch (SQLException e) {
+            System.out.println("[film] selectActorListById error");
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public void insertFilmActor(int filmId, int actorId) {
+        String query = "insert into `film_actor`(`actor_id`, `film_id`) values(?, ?)";
+        try {
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(query);
+            preparedStatement.setInt(1, actorId);
+            preparedStatement.setInt(2, filmId);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            System.out.println("[film] insertFilmActor error");
+            e.printStackTrace();
+        }
     }
 }

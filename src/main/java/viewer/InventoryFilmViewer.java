@@ -30,7 +30,7 @@ public class InventoryFilmViewer {
                 String message = "[1] 재고 선택 [2] 재고 검색 [3] 이전 목록 [4] 다음 목록 [5] 뒤로 가기";
                 int userChoice = ScannerUtil.nextInt(SCANNER, message, 1, 5);
                 if (userChoice == 1) {
-                    //selectInventory();
+                    selectInventory(storeId);
                     i -= LIST_SIZE;
                 } else if (userChoice == 2) {
                     searchInventory(storeId);
@@ -75,15 +75,31 @@ public class InventoryFilmViewer {
             message = "[1] 재고 선택 [2] 목록으로 돌아가기";
             int userChoice = ScannerUtil.nextInt(SCANNER, message, 1, 2);
             if (userChoice == 1) {
-                message = "상세보기할 재고의 번호를 입력해주세요.";
-                userChoice = ScannerUtil.nextInt(SCANNER, message);
-                while (!validateInventoryIdInList(list, userChoice)) {
-                    System.out.println("현재 검색 리스트에 존재하지 않는 재고의 번호입니다.");
-                    userChoice = ScannerUtil.nextInt(SCANNER, message);
-                }
-                printInventoryFilmInfo(userChoice);
+               selectInventory(list);
             }
         }
+    }
+
+    private void selectInventory(int storeId) {
+        String message = "상세보기할 재고의 번호를 입력해주세요.";
+        int userChoice = ScannerUtil.nextInt(SCANNER, message);
+        InventoryFilmController inventoryFilmController = new InventoryFilmController(CONNECTION);
+        ArrayList<InventoryFilmDTO> list = inventoryFilmController.selectByStore(storeId);
+        while (!validateInventoryIdInList(list, userChoice)) {
+            System.out.println("존재하지 않는 재고의 번호입니다.");
+            userChoice = ScannerUtil.nextInt(SCANNER, message);
+        }
+        printInventoryFilmInfo(userChoice);
+    }
+
+    private void selectInventory(ArrayList<InventoryFilmDTO> list) {
+        String message = "상세보기할 재고의 번호를 입력해주세요.";
+        int userChoice = ScannerUtil.nextInt(SCANNER, message);
+        while (!validateInventoryIdInList(list, userChoice)) {
+            System.out.println("현재 검색 리스트에 존재하지 않는 재고의 번호입니다.");
+            userChoice = ScannerUtil.nextInt(SCANNER, message);
+        }
+        printInventoryFilmInfo(userChoice);
     }
 
     private boolean validateInventoryIdInList(ArrayList<InventoryFilmDTO> list, int inventoryId) {
@@ -100,7 +116,7 @@ public class InventoryFilmViewer {
         InventoryFilmDTO inventoryFilmDTO = inventoryFilmController.selectById(inventoryId);
 
         System.out.println("+===================================================+");
-        System.out.println("                     재고 정보");
+        System.out.println("                     비디오 정보");
         System.out.println("+---------------------------------------------------+");
         System.out.println(" [번호] " + inventoryFilmDTO.getInventoryId() + " | [보유 대여점] " + inventoryFilmDTO.getStoreId() + "번 대여점");
         System.out.println("+---------------------------------------------------+");
@@ -125,12 +141,12 @@ public class InventoryFilmViewer {
         System.out.println(" [특이 사항] " + inventoryFilmDTO.getSpecialFeatures());
         System.out.println("+===================================================+");
 
-        String message = "[1] 수정 [2] 삭제 [3] 전체 목록으로";
-        int userChoice = ScannerUtil.nextInt(SCANNER, message, 1, 3);
-        if (userChoice == 1) {
+        String message = "[3] 전체 목록으로";
+        int userChoice = ScannerUtil.nextInt(SCANNER, message, 3, 3);
+        /*if (userChoice == 1) {
             // 수정
         } else if (userChoice == 2) {
             // 삭제
-        }
+        }*/
     }
 }

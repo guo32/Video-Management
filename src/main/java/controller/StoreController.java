@@ -62,4 +62,35 @@ public class StoreController {
         }
         return list;
     }
+
+    public boolean validateManagerStaffId(int managerStaffId) {
+        String query = "select `manager_staff_id` from `store` where `manager_staff_id` = ?";
+        try {
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(query);
+            preparedStatement.setInt(1, managerStaffId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return false;
+            }
+        } catch (SQLException e) {
+            System.out.println("[store] validateManagerStaffId error");
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    public void insert(StoreDTO storeDTO) {
+        String query = "insert into `store`(`manager_staff_id`, `address_id`) values(?, ?)";
+        try {
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(query);
+            preparedStatement.setInt(1, storeDTO.getManagerStaffId());
+            preparedStatement.setInt(2, storeDTO.getAddressId());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            System.out.println("[store] insert error");
+            e.printStackTrace();
+        }
+    }
 }

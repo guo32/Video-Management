@@ -23,6 +23,17 @@ public class ScannerUtil {
         return data;
     }
 
+    public static double nextDouble(Scanner scanner, String message, int length) {
+        String data = nextLine(scanner, message);
+        int frontLength = length - 3;
+        while (!data.matches("\\d{" + frontLength + "}\\.\\d{2}")) {
+            System.out.println("잘못 입력하셨습니다.");
+            data = nextLine(scanner, message);
+        }
+
+        return Double.parseDouble(data);
+    }
+
     public static String nextLine(Scanner scanner, String message) {
         printMessage(message);
         String data = scanner.nextLine();
