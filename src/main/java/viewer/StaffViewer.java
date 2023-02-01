@@ -65,27 +65,30 @@ public class StaffViewer {
     }
 
     private void showAdminMenu() {
-        String message = "[1] 재고 [2] 회원 [3] 영화 [4] 직원 [5] 상점 [6] 로그아웃";
-        int userChoice = ScannerUtil.nextInt(SCANNER, message, 1, 6);
+        String message = "[1] 대여 [2] 재고 [3] 회원 [4] 영화 [5] 직원 [6] 대여점 [7] 로그아웃";
+        int userChoice = ScannerUtil.nextInt(SCANNER, message, 1, 7);
         if (userChoice == 1) {
+            // 대여 관련
+            RentalViewer rentalViewer = new RentalViewer(CONNECTION, SCANNER, login);
+            rentalViewer.showMenu();
+            showStaffMenu(login.getStoreId());
+        } else if (userChoice == 2) {
             // 재고 관련 --> 관리자는 모든 재고 목록을 볼 수 있도록 수정할 것
-            /*InventoryFilmViewer inventoryFilmViewer = new InventoryFilmViewer(CONNECTION, SCANNER);
-            inventoryFilmViewer.printListByStoreId(login.getStoreId());*/
             InventoryViewer inventoryViewer = new InventoryViewer(CONNECTION, SCANNER);
             inventoryViewer.showMenu(login.getStoreId());
             showAdminMenu();
-        } else if (userChoice == 2) {
+        } else if (userChoice == 3) {
             // 고객 관련
             CustomerViewer customerViewer = new CustomerViewer(CONNECTION, SCANNER, login);
             customerViewer.showMenu();
             showAdminMenu();
-        } else if (userChoice == 3) {
-            // 영화 관련
         } else if (userChoice == 4) {
-            showStaffManagementMenu();
+            // 영화 관련
         } else if (userChoice == 5) {
-            // 상점 관련
+            showStaffManagementMenu();
         } else if (userChoice == 6) {
+            // 상점 관련
+        } else if (userChoice == 7) {
             System.out.println("정상적으로 로그아웃되었습니다.");
             login = null;
         }
@@ -280,22 +283,25 @@ public class StaffViewer {
     }
 
     private void showStaffMenu(int storeId) {
-        String message = "[1] 재고 [2] 회원 [3] 로그아웃";
-        int userChoice = ScannerUtil.nextInt(SCANNER, message, 1, 3);
+        String message = "[1] 대여 [2] 재고 [3] 회원 [4] 로그아웃";
+        int userChoice = ScannerUtil.nextInt(SCANNER, message, 1, 4);
 
         if (userChoice == 1) {
+            // 대여
+            RentalViewer rentalViewer = new RentalViewer(CONNECTION, SCANNER, login);
+            rentalViewer.showMenu();
+            showStaffMenu(storeId);
+        } else if (userChoice == 2) {
             // 재고(inventory) viewer 생성 후 수정
-            /*InventoryFilmViewer inventoryFilmViewer = new InventoryFilmViewer(CONNECTION, SCANNER);
-            inventoryFilmViewer.printListByStoreId(storeId);*/
             InventoryViewer inventoryViewer = new InventoryViewer(CONNECTION, SCANNER);
             inventoryViewer.showMenu(storeId);
             showStaffMenu(storeId);
-        } else if (userChoice == 2) {
+        } else if (userChoice == 3) {
             // 고객(customer) viewer 생성 후 수정
             CustomerViewer customerViewer = new CustomerViewer(CONNECTION, SCANNER, login);
             customerViewer.showMenu();
             showStaffMenu(storeId);
-        } else if (userChoice == 3) {
+        } else if (userChoice == 4) {
             System.out.println("정상적으로 로그아웃되었습니다.");
             login = null;
         }

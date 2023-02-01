@@ -1,7 +1,9 @@
 package viewer;
 
 import controller.CustomerController;
+import controller.RentalController;
 import model.CustomerDTO;
+import model.RentalDTO;
 import model.StaffDTO;
 import util.ScannerUtil;
 
@@ -62,13 +64,13 @@ public class CustomerViewer {
         showMenu();
     }
 
-    private void printCustomerList() {
+    public void printCustomerList() {
         CustomerController customerController = new CustomerController(CONNECTION);
         ArrayList<CustomerDTO> list = customerController.selectAll();
         System.out.println("+---------------------------------------------------------+");
         for (int i = 0; i < list.size(); i++) {
             if (i != 0 && i % LIST_SIZE == 0) {
-                String message = "[1] 회원 선택 [2] 회원 검색 [3] 이전 목록 [4] 다음 목록 [5] 뒤로 가기";
+                String message = "[1] 회원 상세보기 [2] 회원 검색 [3] 이전 목록 [4] 다음 목록 [5] 뒤로 가기";
                 int userChoice = ScannerUtil.nextInt(SCANNER, message, 1, 5);
                 if (userChoice == 1) {
                     selectCustomer();
@@ -150,12 +152,18 @@ public class CustomerViewer {
         }
         System.out.println("+======================================+");
 
-        String message = "[1] 수정 [2] 삭제 [3] 뒤로 가기";
-        int userChoice = ScannerUtil.nextInt(SCANNER, message, 1, 3);
+        String message = "[1] 수정 [2] 삭제 [3] 대여 정보 [4] 뒤로 가기";
+        int userChoice = ScannerUtil.nextInt(SCANNER, message, 1, 4);
         if (userChoice == 1) {
             updateCustomer(customerId);
         } else if (userChoice == 2) {
             deleteCustomer(customerId);
+        } else if (userChoice == 3) {
+            RentalController rentalController = new RentalController(CONNECTION);
+            ArrayList<RentalDTO> list = rentalController.selectByCustomerId(customerId, login.getStaffId());
+
+            RentalViewer rentalViewer = new RentalViewer(CONNECTION, SCANNER, login);
+            rentalViewer.printRentalList(list, true);
         }
     }
 
@@ -210,7 +218,7 @@ public class CustomerViewer {
                 System.out.println("+---------------------------------------------------------+");
             }
         }
-        message = "[1] 회원 선택 [2] 목록으로 돌아가기";
+        message = "[1] 회원 상세보기 [2] 목록으로 돌아가기";
         int userChoice = ScannerUtil.nextInt(SCANNER, message, 1, 2);
         if (userChoice == 1) {
             selectCustomer(list);
